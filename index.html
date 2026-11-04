@@ -21,6 +21,13 @@ input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,108,75,.12)}
 .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px} .metric{border:1px solid var(--line);border-radius:12px;padding:13px} .metric small{display:block;color:var(--muted)} .metric strong{display:block;font-size:23px;margin-top:3px}
 .note{font-size:13px;line-height:1.5;color:var(--muted)} .empty{text-align:center} footer{margin-top:20px;text-align:center;font-size:12px;color:var(--muted)}
 @media(max-width:620px){.searchrow{grid-template-columns:1fr}button{min-height:46px}.years{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr}h1{font-size:26px}}
+
+.payment-details{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+.payment-details summary{font-weight:800;cursor:pointer;color:var(--accent);padding:8px 0}
+.payment-entry{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fafcfb}
+.payment-entry .payment-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-weight:750}
+.payment-entry p{margin:5px 0 0;font-size:13px;color:var(--muted)}
+.payment-hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}
 </style>
 </head>
 <body>
@@ -30,9 +37,9 @@ input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,108,75,.12)}
 <form id="form"><label for="q">Nombre o N° de socio</label><div class="searchrow"><input id="q" type="search" autocomplete="off" placeholder="Ej.: Olga Saldías o 62"><button>Consultar</button></div></form>
 <div id="matches" class="matches hidden"></div>
 </section>
-<section id="result" class="card hidden"><div class="head"><div><div id="num" class="num"></div><h2 id="name"></h2></div><div class="total"><small>Total registrado</small><strong id="total"></strong></div></div><div id="years" class="years"></div><div id="summary" class="summary"></div></section>
+<section id="result" class="card hidden"><div class="head"><div><div id="num" class="num"></div><h2 id="name"></h2></div><div class="total"><small>Total registrado</small><strong id="total"></strong></div></div><div id="years" class="years"></div><div id="summary" class="summary"></div><div id="payment-details" class="payment-details"></div></section>
 <section id="empty" class="card empty hidden"><strong>No encontramos ese nombre o número.</strong><p class="note">Revisa la escritura o consulta con Tesorería del APR.</p></section>
-<section class="card note"><strong>Importante:</strong> información elaborada según los registros de Tesorería del APR Huilipilún. Si detectas una diferencia en tus cuotas, solicita su revisión a Tesorería. La nómina oficial corresponde a los socios N°1 al N°125. Los pagos identificados de personas fuera de esa nómina se muestran como “Registro no oficial”. Esta consulta pública no muestra medios de pago ni fechas de transacciones.</section>
+<section class="card note"><strong>Importante:</strong> información elaborada según los registros de Tesorería del APR Huilipilún. Si detectas una diferencia en tus cuotas, solicita su revisión a Tesorería. La nómina oficial corresponde a los socios N°1 al N°125. Los pagos identificados de personas fuera de esa nómina se muestran como “Registro no oficial”. Esta consulta pública muestra fechas, montos, medios de pago y referencias de los comprobantes individualizados. No publica RUT ni números de cuentas bancarias. Los pagos históricos sin respaldo individualizado se mantienen como pagados según Tesorería.</section>
 <footer>APR Huilipilún · Estado de cuotas 2022–2026 · Actualizado al 04/11/2026</footer>
 </main>
 <script>
@@ -44,8 +51,37 @@ const years=["2022","2023","2024","2025","2026"];
 const norm=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const money=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n);
 function dec(v){if(v==="P")return{label:"Pagada",amount:10000,k:"paid"};if(/^\d+$/.test(v))return{label:"Pago parcial",amount:+v,k:"review"};if(v==="R")return{label:"Revisar",amount:0,k:"review"};return{label:"Pendiente",amount:0,k:"pending"}}
+
+const paymentRecords=[["12","01/11/2026",50000,"Transferencia BCI/MACH","2022–2026","1252642914","Ordenante: Lorena Martinich; concepto: Raquel Segura"],["65","27/09/2026",30000,"Transferencia BancoEstado","2024–2026","7033842","Transferencia conjunta con socia N°66"],["66","27/09/2026",30000,"Transferencia BancoEstado","2024–2026","7033842","Transferencia conjunta con socio N°65"],["106","24/09/2026",40000,"Transferencia BancoEstado","2023–2026","7089979",""],["94","30/09/2026",30000,"Depósito en efectivo BancoEstado","2022–2024","BC397A32",""],["116","02/11/2026",40000,"Transferencia Mercado Pago","2022–2025","187446304028",""],["116","29/05/2024",10000,"Transferencia a receptora del APR","2026","900850","Remanente de pago de María Tejada; imputación posterior"],["30","29/05/2024",50000,"Transferencia a receptora del APR","2022–2026","900850","Parte de transferencia de $60.000; $10.000 asignados al socio N°116"],["98","21/12/2025",30000,"Transferencia BancoEstado","2022–2024","600170016569",""],["52","23/09/2026",10000,"Transferencia BancoEstado","2026","8090980",""],["56","20/12/2023",10000,"Transferencia BancoEstado","2023","7079182",""],["56","14/09/2026",10000,"Transferencia BancoEstado","2026","8052834",""]];
+function renderPayments(m){
+ const host=document.querySelector("#payment-details");
+ const entries=paymentRecords.filter(r=>r[0]===m.n);
+ const known=entries.reduce((a,r)=>a+r[2],0);
+ const total=m.s.map(dec).reduce((a,r)=>a+r.amount,0);
+ const heading=document.createElement("details");
+ const summary=document.createElement("summary");
+ summary.textContent="Detalle de pagos registrados ("+entries.length+")";
+ heading.appendChild(summary);
+ entries.forEach(r=>{
+  const item=document.createElement("div");item.className="payment-entry";
+  const top=document.createElement("div");top.className="payment-top";
+  const date=document.createElement("span");date.textContent=r[1];
+  const amount=document.createElement("span");amount.textContent=money(r[2]);
+  top.append(date,amount);item.appendChild(top);
+  for(const s of [r[3],"Cuotas: "+r[4],"Referencia: "+r[5],r[6]]){
+   if(!s)continue;const p=document.createElement("p");p.textContent=s;item.appendChild(p);
+  }
+  heading.appendChild(item);
+ });
+ const hint=document.createElement("p");hint.className="payment-hint";
+ if(total>known)hint.textContent="Además, existen "+money(total-known)+" en cuotas registradas históricamente cuyo comprobante individual todavía no está incorporado a esta consulta. No implica deuda.";
+ else if(entries.length===0)hint.textContent=total===0?"No hay pagos registrados para este socio.":"El estado de cuotas figura pagado en Tesorería, pero todavía no se han individualizado los comprobantes para esta consulta.";
+ else hint.textContent="Detalle respaldado por los antecedentes disponibles en Tesorería. La fecha de pago puede ser distinta del año de la cuota imputada.";
+ heading.appendChild(hint);host.replaceChildren(heading);
+}
+
 const q=document.querySelector("#q"), matches=document.querySelector("#matches"), result=document.querySelector("#result"), empty=document.querySelector("#empty");
-function show(m){matches.classList.add("hidden");empty.classList.add("hidden");result.classList.remove("hidden");document.querySelector("#num").textContent=m.type==="no-official"?"Registro no oficial":"Socio N° "+m.n;document.querySelector("#name").textContent=m.name;const st=m.s.map(dec);document.querySelector("#total").textContent=money(st.reduce((a,b)=>a+b.amount,0));const y=document.querySelector("#years");y.innerHTML="";st.forEach((s,i)=>{const d=document.createElement("div");d.className="year "+s.k;d.innerHTML=`<div class="y">${years[i]}</div><div class="status">${s.k==="paid"?"✓":s.k==="review"?"?":"○"} ${s.label}</div>${s.amount?`<div class="money">${money(s.amount)}</div>`:""}`;y.appendChild(d)});const paid=st.filter(x=>x.k==="paid").length,pending=st.filter(x=>x.k==="pending").length,review=st.filter(x=>x.k==="review").length;document.querySelector("#summary").innerHTML=`<div class="metric"><small>Cuotas pagadas completas</small><strong>${paid} / 5</strong></div><div class="metric"><small>Cuotas pendientes</small><strong>${pending}</strong></div><div class="metric"><small>Requieren revisión</small><strong>${review}</strong></div>`}
+function show(m){matches.classList.add("hidden");empty.classList.add("hidden");result.classList.remove("hidden");document.querySelector("#num").textContent=m.type==="no-official"?"Registro no oficial":"Socio N° "+m.n;document.querySelector("#name").textContent=m.name;const st=m.s.map(dec);document.querySelector("#total").textContent=money(st.reduce((a,b)=>a+b.amount,0));const y=document.querySelector("#years");y.innerHTML="";st.forEach((s,i)=>{const d=document.createElement("div");d.className="year "+s.k;d.innerHTML=`<div class="y">${years[i]}</div><div class="status">${s.k==="paid"?"✓":s.k==="review"?"?":"○"} ${s.label}</div>${s.amount?`<div class="money">${money(s.amount)}</div>`:""}`;y.appendChild(d)});const paid=st.filter(x=>x.k==="paid").length,pending=st.filter(x=>x.k==="pending").length,review=st.filter(x=>x.k==="review").length;document.querySelector("#summary").innerHTML=`<div class="metric"><small>Cuotas pagadas completas</small><strong>${paid} / 5</strong></div><div class="metric"><small>Cuotas pendientes</small><strong>${pending}</strong></div><div class="metric"><small>Requieren revisión</small><strong>${review}</strong></div>`;renderPayments(m)}
 function search(){const s=q.value.trim();if(!s)return;const n=norm(s);const f=members.filter(m=>(m.type==="official"&&m.n===s)||norm(m.name).includes(n)).slice(0,10);if(f.length===1)return show(f[0]);result.classList.add("hidden");empty.classList.toggle("hidden",f.length>0);matches.innerHTML="";if(f.length){f.forEach(m=>{const b=document.createElement("button");b.type="button";b.className="match";b.textContent=m.type==="no-official"?`No oficial · ${m.name}`:`N° ${m.n} · ${m.name}`;b.onclick=()=>show(m);matches.appendChild(b)});matches.classList.remove("hidden")}else matches.classList.add("hidden")}
 document.querySelector("#form").addEventListener("submit",e=>{e.preventDefault();search()});
 q.addEventListener("input",()=>{if(q.value.trim().length>=2)search();else{matches.classList.add("hidden");result.classList.add("hidden");empty.classList.add("hidden")}});
