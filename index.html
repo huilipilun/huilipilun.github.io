@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="version" content="2026-11-04-1604">
+<meta name="version" content="2026-11-04-comprobante">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Estado de Cuotas - APR Huilipilún</title>
@@ -24,6 +24,7 @@ input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,108,75,.12)}
 .note{font-size:13px;line-height:1.5;color:var(--muted)} .empty{text-align:center} footer{margin-top:20px;text-align:center;font-size:12px;color:var(--muted)}
 @media(max-width:620px){.searchrow{grid-template-columns:1fr}button{min-height:46px}.years{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr}h1{font-size:26px}}
 
+.receipt-actions{margin-top:18px}
 .payment-details{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
 .payment-details summary{font-weight:800;cursor:pointer;color:var(--accent);padding:8px 0}
 .payment-entry{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fafcfb}
@@ -39,10 +40,10 @@ input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,108,75,.12)}
 <form id="form"><label for="q">Nombre o N° de socio</label><div class="searchrow"><input id="q" type="search" autocomplete="off" placeholder="Ej.: Olga Saldías o 62"><button>Consultar</button></div></form>
 <div id="matches" class="matches hidden"></div>
 </section>
-<section id="result" class="card hidden"><div class="head"><div><div id="num" class="num"></div><h2 id="name"></h2></div><div class="total"><small>Total registrado</small><strong id="total"></strong></div></div><div id="years" class="years"></div><div id="summary" class="summary"></div><div id="payment-details" class="payment-details"></div></section>
+<section id="result" class="card hidden"><div class="head"><div><div id="num" class="num"></div><h2 id="name"></h2></div><div class="total"><small>Total registrado</small><strong id="total"></strong></div></div><div id="years" class="years"></div><div id="summary" class="summary"></div><div class="receipt-actions"><button id="download-receipt" type="button">Descargar comprobante (PDF)</button></div><div id="payment-details" class="payment-details"></div></section>
 <section id="empty" class="card empty hidden"><strong>No encontramos ese nombre o número.</strong><p class="note">Revisa la escritura o consulta con Tesorería del APR.</p></section>
 <section class="card note"><strong>Importante:</strong> información elaborada según los registros de Tesorería del APR Huilipilún. Si detectas una diferencia en tus cuotas, solicita su revisión a Tesorería. La nómina oficial corresponde a los socios N°1 al N°125. Los pagos identificados de personas fuera de esa nómina se muestran como “Registro no oficial”. Esta consulta pública muestra fechas, montos, medios de pago y referencias de los comprobantes individualizados. No publica RUT ni números de cuentas bancarias. Los pagos históricos sin respaldo individualizado se mantienen como pagados según Tesorería.</section>
-<footer>APR Huilipilún · Estado de cuotas 2022–2026 · Actualizado al 04/11/2026</footer>
+<footer>APR Huilipilún · Estado de cuotas 2022–2026 · Actualizado al <time id="data-date" datetime="2026-11-04">04/11/2026</time></footer>
 </main>
 <script>
 const raw='1|Rosa Ester Novoa Coñoequir|P|P|-|-|-\n2|Juan Carlos Painemao Quiñehual|P|P|P|P|-\n3|Ismael Painemao Quiñehual|P|P|-|-|-\n4|Jorge Ismael Painemao Manqueo|P|P|P|P|-\n5|Rodrigo Hernán Inostroza Lagos|-|-|-|-|-\n6|Rolando Patricio Matus Valle|P|P|-|-|-\n7|Marisol Eugenia Riquelme Quintana|P|P|-|-|-\n8|Sergio Iván Matus Matus|-|-|-|-|-\n9|Edgardo Marcelo Castro Zarate|P|P|-|-|-\n10|Danila Divia Matus Matus|P|P|P|P|P\n11|Exequiel Sandoval Matus|-|-|-|-|-\n12|María Raquel Segura Segura|P|P|P|P|P\n13|Jaime Ulises Sandoval Bastías|-|-|-|-|-\n14|Nilda Leonor Segura Segura|-|-|-|-|-\n15|Sede Huilipilún|-|-|-|-|-\n16|Elba del Carmen Venegas Figueroa|-|-|-|-|-\n17|Gloria Elizabeth Galindo Muñoz|P|-|-|-|-\n18|José Pedro Márquez Hernández|P|-|P|P|-\n19|Rafael Alberto Ortega Carvacho|-|-|-|-|-\n20|Bernarda del Carmen Ortega Figueroa|P|-|-|-|-\n21|Adriana del Tránsito Sepúlveda Verdugo|P|P|P|P|-\n22|Nelson Agapito Torres Hernández|-|P|-|-|-\n23|Juana Painemao Quiñehual|P|P|P|P|-\n24|Gabriel Bernardo Orellana Troncoso|P|P|P|P|-\n25|Héctor Galindo Reyes|P|P|P|-|-\n26|Héctor Manuel Galindo Muñoz|P|P|P|P|-\n27|Francisco Javier Quesada Ugalde|P|P|P|P|P\n28|Ulda María Angélica Espinoza Valdebenito|P|P|-|-|-\n29|Alex Andrés Maldonado Manríquez|P|P|P|P|-\n30|María del Pilar Tejada Murcia|P|P|P|P|P\n31|Víctor Manuel Moncada Zúñiga|-|-|-|-|-\n32|Luis Alberto Jeldrez Chávez|P|P|P|-|-\n33|Rudy Hernán Jeldrez Chávez|6000|P|P|P|P\n34|Erin Hernán Jeldres Candia|P|P|P|P|P\n35|José Gilberto Jeldrez Chávez|P|P|P|P|P\n36|Ana María Chávez Fritz|P|P|P|-|-\n37|Mariana Elizabeth Jeldres Chávez|P|P|P|P|P\n38|Luis Arturo Sepúlveda Chávez|-|-|-|-|-\n39|José Raúl Sepúlveda Chávez|-|-|-|-|-\n40|Geraldine Makarena Martínez Cabrera|P|P|P|P|P\n41|Mónica Leonor Segura Norambuena|-|-|-|-|-\n42|Beatriz del Pilar Segura Norambuena|P|-|-|-|-\n43|Carlos Joel Norambuena Quiroz|P|P|P|P|-\n44|Jeannette Margarita Ruiz Dumenez|P|P|P|P|-\n45|Karin Solange Spiess Ruiz|P|P|P|P|-\n46|Juan Carlos Toloza Muñoz|5000|P|P|P|P\n47|Marianne Elizabeth Spiess Ruiz|P|P|P|P|-\n48|Silvia Herminia Segura Norambuena|P|P|P|P|P\n49|Enrique Lema González|P|P|P|P|P\n50|Alda Gloria Orellana Vargas|P|-|-|-|-\n51|Gustavo Eduardo Sanhueza Licanqueo|P|P|P|P|-\n52|Isolina del Carmen Marihueque Pérez|P|P|P|P|P\n53|Gladys del Carmen Reyes González|P|-|-|-|-\n54|Darling Rocío Rebolledo Rojas|P|-|-|-|-\n55|Francisco Misael Reyes González|P|P|P|P|-\n56|María Nadia Inostroza González|P|P|P|P|P\n57|Helida del Pilar Reyes González|P|-|-|-|-\n58|Jeannette Margot Reyes González|-|-|-|-|-\n59|Eduardo Exequiel Anabalón Álvarez|P|P|-|-|-\n60|Primitivo Segundo Castillo Saldías|P|P|-|-|-\n61|Carlos Patricio Muñoz Ruiz|P|P|-|P|P\n62|Olga Irene Saldías Fuentes|-|P|P|P|-\n63|Javier Antonio Orellana Castillo|P|-|-|-|-\n64|Víctor Tomás Bobadilla Cárdenas|P|P|-|-|-\n65|Joaquín Francisco Palomer Caiozzi|P|P|P|P|P\n66|María Trinidad Palomer Prieto|P|P|P|P|P\n67|Sergio Antonio Sandoval Palma|P|P|P|P|P\n68|Herminia del Carmen Castillo Saldías|-|P|P|-|-\n69|Exequiel Gustavo Sandoval Bastías|-|-|-|-|-\n70|Marta del Carmen Sandoval Bastías|-|-|-|-|-\n71|Jorge Luis Burgos Carrasco|-|-|-|-|-\n72|Jorge Domingo Burgos Beroiza|P|P|P|P|P\n73|Juana Leticia Salinas Carrasco|P|P|P|P|-\n74|Ignacio Andrés Ibáñez Maldonado|-|-|-|-|-\n75|Claudio Alejandro Segura Norambuena|P|-|-|-|-\n76|Noemí Elena Segura Norambuena|P|P|P|-|-\n77|Sergio Gregorio Mellado Mellado|P|P|P|P|-\n78|Margarita Isolina Yévenes Arévalo|P|P|P|P|-\n79|Eliseo Bautista Traillanca Chanqueo|P|P|P|P|P\n80|Juan Hernán Curín Caniulem|-|-|-|-|-\n81|Cesar Enoc Gallegos Gallegos|-|-|-|-|-\n82|Luis Fidel Bobadilla Cárdenas|P|P|P|-|P\n83|Eliecer Felipe Bobadilla Muñoz|P|-|P|-|-\n84|Carlos German Bobadilla Molina|-|-|-|-|-\n85|Ramon Humberto Caceres Ruiz|P|-|-|-|-\n86|Ulda Soledad Orellana Vargas|P|P|P|P|-\n87|Yolanda Quiroz Esparza|P|P|P|P|-\n88|Eindry Daniela Stephanie Anabalon Lara|P|P|-|-|-\n89|José Miguel Gonzalez Alarcón|P|P|P|P|P\n90|Liz Catherine Valeska Anabalon Matus|P|P|-|-|-\n91|Ociel Arnoldo Norambuena Quiroz|P|P|P|P|P\n92|Sergio Orlando Norambuena Quiroz|P|P|P|P|P\n93|Ovidio Ruben Norambuena Quiroz|-|-|-|-|-\n94|Angelica Haydee Norambuena Quiroz|P|P|P|-|-\n95|Nancy Betsabe Bobadilla Muñoz|P|P|P|P|-\n96|Ismael Elias Bobadilla Muñoz|P|P|P|P|-\n97|Daniel Fernando Sandoval Castillo|P|P|P|P|P\n98|Nicole Dominique Diaz Vera|P|P|P|-|-\n99|Alberto Audilio Peña Castro|P|-|-|-|-\n100|Fabio Ademir Galindo Ceballos|-|-|-|-|-\n101|Jose Alejandro Arevalo Sandoval|5000|-|-|-|-\n102|Patricio Aladin Meneses Garrido|-|-|-|-|-\n103|Luis Omar Vega Caro|P|P|P|P|P\n104|Peña Yáñez Ximena Carolina|P|P|-|-|-\n105|Humberto Boris Cuevas Zurita|-|-|-|-|-\n106|Romualdo Painemao Quiñehual|P|P|P|P|P\n107|Jarpa Arenas Patricia Angelica|-|-|-|-|-\n108|Jorge Eduardo Neyra Sandoval|P|P|P|P|-\n109|Fernando Jesús Figueroa Galindo|P|P|P|P|-\n110|Juana del Carmen Painenao Manqueo|P|P|P|P|P\n111|Flor Edelmira Painenao Manqueo|P|P|P|P|P\n112|Ana Rosa Painenao Manqueo|P|P|P|P|P\n113|Yolanda Ester Rodriguez Leal|-|-|-|-|-\n114|Valeria Elena Lema Orellana|P|P|P|P|P\n115|Leandro Andrés Toloza Castillo|-|-|-|-|-\n116|Edgardo Valencia|P|P|P|P|P\n117|Josefina del Carmen Valdebenito Muñoz (Pablo Espinoza)|P|P|P|P|P\n118|Manuel Painemao|P|P|P|P|-\n119|Hugo Arcadio Barra Cifuentes|P|P|P|P|P\n120|Denisse Dorca Bobadilla Parra|P|P|-|-|-\n121|Marcia Verónica Maldonado Araneda|-|-|-|-|-\n122|Javiera Scarlett Macias Castillo|-|-|-|-|-\n123|Pedro Ivan Painemao Manqueo|-|-|-|-|-\n124|Marcelo Fernando Araya Donoso|-|-|-|-|-\n125|Mario Boris Beraud Fernandez|-|-|-|-|-';
@@ -55,35 +56,221 @@ const money=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",ma
 function dec(v){if(v==="P")return{label:"Pagada",amount:10000,k:"paid"};if(/^\d+$/.test(v))return{label:"Pago parcial",amount:+v,k:"review"};if(v==="R")return{label:"Revisar",amount:0,k:"review"};return{label:"Pendiente",amount:0,k:"pending"}}
 
 const paymentRecords=[["12","01/11/2026",50000,"Transferencia BCI/MACH","2022–2026","1252642914","Ordenante: Lorena Martinich; concepto: Raquel Segura"],["65","27/09/2026",30000,"Transferencia BancoEstado","2024–2026","7033842","Transferencia conjunta con socia N°66"],["66","27/09/2026",30000,"Transferencia BancoEstado","2024–2026","7033842","Transferencia conjunta con socio N°65"],["106","24/09/2026",40000,"Transferencia BancoEstado","2023–2026","7089979",""],["94","30/09/2026",30000,"Depósito en efectivo BancoEstado","2022–2024","BC397A32",""],["116","02/11/2026",40000,"Transferencia Mercado Pago","2022–2025","187446304028",""],["116","29/05/2024",10000,"Transferencia a receptora del APR","2026","900850","Remanente de pago de María Tejada; imputación posterior"],["30","29/05/2024",50000,"Transferencia a receptora del APR","2022–2026","900850","Parte de transferencia de $60.000; $10.000 asignados al socio N°116"],["98","21/12/2025",30000,"Transferencia BancoEstado","2022–2024","600170016569",""],["52","23/09/2026",10000,"Transferencia BancoEstado","2026","8090980",""],["56","20/12/2023",10000,"Transferencia BancoEstado","2023","7079182",""],["56","14/09/2026",10000,"Transferencia BancoEstado","2026","8052834",""],["110","26/09/2025",40000,"Transferencia BancoEstado","2022–2025","8057824","Ordenante: Juana del Carmen Painenao Manqueo; recibido según aviso bancario"],["110","26/09/2025",10000,"Transferencia BancoEstado","2026","8077871","Comprobante aportado; aviso por correo no localizado"],["111","26/09/2025",50000,"Transferencia BancoEstado","2022–2026","8077260","Atribuido a Flor Painenao según conversación; aviso por correo no localizado"],["112","26/09/2025",50000,"Transferencia BancoEstado","2022–2026","8015224","Ordenante: Gabriel Castillo Daza; recibido según aviso bancario"]];
-function renderPayments(m){
+function paymentDetails(m,total){
+ const entries=paymentRecords.filter(r=>r[0]===m.n).map(([,date,amount,method,quotaYears,reference,note])=>({
+  date,amount,labels:[method,quotaYears&&"Cuotas: "+quotaYears,reference&&"Referencia: "+reference,note].filter(Boolean)
+ }));
+ const known=entries.reduce((sum,entry)=>sum+entry.amount,0);
+ let hint;
+ if(total>known)hint="Hay "+money(total-known)+" en cuotas registradas históricamente sin comprobante individual incorporado a esta consulta. Su estado se indica arriba.";
+ else if(!entries.length)hint="No hay pagos registrados para este socio.";
+ else hint="Detalle respaldado por los antecedentes disponibles en Tesorería. La fecha de pago puede ser distinta del año de la cuota imputada.";
+ return {entries,hint};
+}
+
+function renderPayments({entries,hint}){
  const host=document.querySelector("#payment-details");
- const entries=paymentRecords.filter(r=>r[0]===m.n);
- const known=entries.reduce((a,r)=>a+r[2],0);
- const total=m.s.map(dec).reduce((a,r)=>a+r.amount,0);
- const heading=document.createElement("details");
+ const details=document.createElement("details");
  const summary=document.createElement("summary");
  summary.textContent="Detalle de pagos registrados ("+entries.length+")";
- heading.appendChild(summary);
- entries.forEach(r=>{
+ details.appendChild(summary);
+ for(const payment of entries){
   const item=document.createElement("div");item.className="payment-entry";
   const top=document.createElement("div");top.className="payment-top";
-  const date=document.createElement("span");date.textContent=r[1];
-  const amount=document.createElement("span");amount.textContent=money(r[2]);
+  const date=document.createElement("span");date.textContent=payment.date;
+  const amount=document.createElement("span");amount.textContent=money(payment.amount);
   top.append(date,amount);item.appendChild(top);
-  for(const s of [r[3],"Cuotas: "+r[4],"Referencia: "+r[5],r[6]]){
-   if(!s)continue;const p=document.createElement("p");p.textContent=s;item.appendChild(p);
+  for(const label of payment.labels){
+   const p=document.createElement("p");p.textContent=label;item.appendChild(p);
   }
-  heading.appendChild(item);
+  details.appendChild(item);
+ }
+ const note=document.createElement("p");
+ note.className="payment-hint";note.textContent=hint;
+ details.appendChild(note);host.replaceChildren(details);
+}
+
+const receiptButton=document.querySelector("#download-receipt");
+const dataDate=document.querySelector("#data-date").textContent;
+
+function pdfText(text){
+ // Base PDF fonts use WinAnsi. Hex strings keep every PDF offset byte-aligned.
+ return "<"+Array.from(text.normalize("NFC").replace(/[–—]/g,"-"),c=>{
+  const code=c.charCodeAt(0);
+  return ((code>=32&&code<=126)||(code>=160&&code<=255)?code:63).toString(16).padStart(2,"0");
+ }).join("")+">";
+}
+
+function buildPdf(pages){
+ const objects=[
+  "<< /Type /Catalog /Pages 2 0 R >>",
+  "",
+  "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
+  "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>"
+ ];
+ const kids=[];
+ for(const page of pages){
+  const pageId=objects.length+1;
+  kids.push(pageId+" 0 R");
+  const stream=page.join("\n")+"\n";
+  objects.push(
+   `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${pageId+1} 0 R >>`,
+   `<< /Length ${stream.length} >>\nstream\n${stream}endstream`
+  );
+ }
+ objects[1]=`<< /Type /Pages /Kids [${kids.join(" ")}] /Count ${kids.length} >>`;
+
+ let pdf="%PDF-1.4\n";
+ const offsets=[];
+ objects.forEach((object,i)=>{
+  offsets.push(pdf.length);
+  pdf+=`${i+1} 0 obj\n${object}\nendobj\n`;
  });
- const hint=document.createElement("p");hint.className="payment-hint";
- if(total>known)hint.textContent="Además, existen "+money(total-known)+" en cuotas registradas históricamente cuyo comprobante individual todavía no está incorporado a esta consulta. No implica deuda.";
- else if(entries.length===0)hint.textContent=total===0?"No hay pagos registrados para este socio.":"El estado de cuotas figura pagado en Tesorería, pero todavía no se han individualizado los comprobantes para esta consulta.";
- else hint.textContent="Detalle respaldado por los antecedentes disponibles en Tesorería. La fecha de pago puede ser distinta del año de la cuota imputada.";
- heading.appendChild(hint);host.replaceChildren(heading);
+ const xref=pdf.length;
+ pdf+=`xref\n0 ${objects.length+1}\n0000000000 65535 f \n`;
+ for(const offset of offsets)pdf+=String(offset).padStart(10,"0")+" 00000 n \n";
+ pdf+=`trailer\n<< /Size ${objects.length+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`;
+ return new Blob([pdf],{type:"application/pdf"});
+}
+
+function wrapReceiptText(text,maxLength){
+ const lines=[""];
+ for(const word of text.split(/\s+/)){
+  const last=lines.length-1;
+  if(lines[last].length&&lines[last].length+word.length+1>maxLength)lines.push(word);
+  else lines[last]+=(lines[last]?" ":"")+word;
+ }
+ return lines;
+}
+
+function makeReceipt(m,statuses,totals,payments){
+ const pages=[];
+ const left=48, right=547;
+ const ink="0.09 0.21 0.16", muted="0.34 0.41 0.38", green="0.13 0.39 0.26";
+ const statusColors={paid:green,pending:"0.55 0.20 0.16",review:"0.43 0.32 0.02"};
+ let page, y;
+ const text=(value,x,at,size,{bold=false,color=ink}={})=>
+  page.push(`BT /${bold?"F2":"F1"} ${size} Tf ${color} rg 1 0 0 1 ${x} ${at} Tm ${pdfText(value)} Tj ET`);
+ const line=at=>page.push(`0.86 0.90 0.88 RG 0.7 w ${left} ${at} m ${right} ${at} l S`);
+ const band=(at,height)=>page.push(`0.93 0.97 0.94 rg ${left} ${at} ${right-left} ${height} re f`);
+ const newPage=()=>{
+  page=[];
+  pages.push(page);
+  text("APR HUILIPILÚN  /  TESORERÍA",left,791,11,{bold:true,color:green});
+  line(779);
+  y=750;
+ };
+ const ensureSpace=height=>{
+  if(y-height>=112)return;
+  newPage();
+  text("Detalle de pagos registrados (continuación)",left,y,14,{bold:true});
+  y-=25;
+ };
+ const paragraph=(value,at,size=10)=>{
+  const lines=wrapReceiptText(value,88);
+  lines.forEach((part,i)=>text(part,left,at-i*14,size,{color:muted}));
+  return lines.length*14;
+ };
+
+ newPage();
+ const issueDate=new Intl.DateTimeFormat("es-CL",{
+  timeZone:"America/Santiago",day:"2-digit",month:"2-digit",year:"numeric"
+ }).format(new Date()).replaceAll("-","/");
+ text("Comprobante de estado de cuotas",left,y,25,{bold:true});
+ text(`Período ${years[0]}-${years[years.length-1]}   |   Emitido el ${issueDate}`,left,y-23,11,{color:muted});
+ y-=58;
+ text(m.type==="no-official"?"REGISTRO NO OFICIAL":`SOCIO N° ${m.n}`,left,y,10,{bold:true,color:green});
+ y-=23;
+ for(const nameLine of wrapReceiptText(m.name,46)){
+  text(nameLine,left,y,19,{bold:true});
+  y-=22;
+ }
+ y-=36;
+ band(y-11,49);
+ text("TOTAL REGISTRADO",left+13,y+21,9,{bold:true,color:green});
+ text(money(totals.amount),left+13,y-1,20,{bold:true});
+ text(`${totals.paid} de ${statuses.length} cuotas pagadas completas`,253,y+15,11,{bold:true});
+ text(`Pendientes: ${totals.pending}     Requieren revisión: ${totals.review}`,253,y-1,10,{color:muted});
+ y-=46;
+
+ text("Estado por año",left,y,14,{bold:true});
+ y-=22;
+ text("Año",left,y,9,{bold:true,color:muted});
+ text("Estado de la cuota",182,y,9,{bold:true,color:muted});
+ text("Monto registrado",406,y,9,{bold:true,color:muted});
+ line(y-7);
+ y-=22;
+ statuses.forEach((status,i)=>{
+  text(years[i],left,y,11,{bold:true});
+  text(status.label,182,y,11,{color:statusColors[status.k]});
+  text(money(status.amount),406,y,11);
+  line(y-8);
+  y-=21;
+ });
+ y-=14;
+
+ text("Detalle de pagos registrados",left,y,14,{bold:true});
+ y-=23;
+ if(!payments.entries.length){
+  text("Sin pagos individualizados disponibles en la consulta.",left,y,10,{color:muted});
+  y-=19;
+ }
+ for(const payment of payments.entries){
+  const lines=payment.labels.flatMap(label=>wrapReceiptText(label,88));
+  ensureSpace(30+lines.length*14);
+  text(`${payment.date}  |  ${money(payment.amount)}`,left,y,11,{bold:true});
+  lines.forEach((label,i)=>text(label,left,y-15-i*14,10,{color:muted}));
+  y-=22+lines.length*14;
+ }
+ ensureSpace(wrapReceiptText(payments.hint,88).length*14);
+ paragraph(payments.hint,y);
+
+ pages.forEach((content,i)=>{
+  page=content;
+  line(89);
+  text("Documento informativo elaborado a partir del registro de Tesorería.",left,72,9,{color:muted});
+  text(`Registro actualizado al ${dataDate}  |  https://huilipilun.github.io/`,left,57,9,{color:muted});
+  text(`${i+1} / ${pages.length}`,right-27,57,9,{color:muted});
+ });
+ return buildPdf(pages);
+}
+
+function downloadReceipt(m,statuses,totals,payments){
+ const url=URL.createObjectURL(makeReceipt(m,statuses,totals,payments));
+ const link=document.createElement("a");
+ const fileId=m.type==="no-official"?"registro-no-oficial":m.n;
+ link.href=url;
+ link.download=`APR-Huilipilun-comprobante-${fileId}.pdf`;
+ document.body.appendChild(link);
+ link.click();
+ link.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),30000);
 }
 
 const q=document.querySelector("#q"), matches=document.querySelector("#matches"), result=document.querySelector("#result"), empty=document.querySelector("#empty");
-function show(m){matches.classList.add("hidden");empty.classList.add("hidden");result.classList.remove("hidden");document.querySelector("#num").textContent=m.type==="no-official"?"Registro no oficial":"Socio N° "+m.n;document.querySelector("#name").textContent=m.name;const st=m.s.map(dec);document.querySelector("#total").textContent=money(st.reduce((a,b)=>a+b.amount,0));const y=document.querySelector("#years");y.innerHTML="";st.forEach((s,i)=>{const d=document.createElement("div");d.className="year "+s.k;d.innerHTML=`<div class="y">${years[i]}</div><div class="status">${s.k==="paid"?"✓":s.k==="review"?"?":"○"} ${s.label}</div>${s.amount?`<div class="money">${money(s.amount)}</div>`:""}`;y.appendChild(d)});const paid=st.filter(x=>x.k==="paid").length,pending=st.filter(x=>x.k==="pending").length,review=st.filter(x=>x.k==="review").length;document.querySelector("#summary").innerHTML=`<div class="metric"><small>Cuotas pagadas completas</small><strong>${paid} / 5</strong></div><div class="metric"><small>Cuotas pendientes</small><strong>${pending}</strong></div><div class="metric"><small>Requieren revisión</small><strong>${review}</strong></div>`;renderPayments(m)}
+function show(m){
+ matches.classList.add("hidden");empty.classList.add("hidden");result.classList.remove("hidden");
+ document.querySelector("#num").textContent=m.type==="no-official"?"Registro no oficial":"Socio N° "+m.n;
+ document.querySelector("#name").textContent=m.name;
+ const statuses=m.s.map(dec);
+ const totals={
+  amount:statuses.reduce((sum,status)=>sum+status.amount,0),
+  paid:statuses.filter(status=>status.k==="paid").length,
+  pending:statuses.filter(status=>status.k==="pending").length,
+  review:statuses.filter(status=>status.k==="review").length
+ };
+ document.querySelector("#total").textContent=money(totals.amount);
+ const y=document.querySelector("#years");y.innerHTML="";
+ statuses.forEach((status,i)=>{
+  const d=document.createElement("div");d.className="year "+status.k;
+  d.innerHTML=`<div class="y">${years[i]}</div><div class="status">${status.k==="paid"?"✓":status.k==="review"?"?":"○"} ${status.label}</div>${status.amount?`<div class="money">${money(status.amount)}</div>`:""}`;
+  y.appendChild(d);
+ });
+ document.querySelector("#summary").innerHTML=`<div class="metric"><small>Cuotas pagadas completas</small><strong>${totals.paid} / ${statuses.length}</strong></div><div class="metric"><small>Cuotas pendientes</small><strong>${totals.pending}</strong></div><div class="metric"><small>Requieren revisión</small><strong>${totals.review}</strong></div>`;
+ const payments=paymentDetails(m,totals.amount);
+ renderPayments(payments);
+ receiptButton.onclick=()=>downloadReceipt(m,statuses,totals,payments);
+}
 function search(){const s=q.value.trim();if(!s)return;const n=norm(s);const f=members.filter(m=>(m.type==="official"&&m.n===s)||norm(m.name).includes(n)).slice(0,10);if(f.length===1)return show(f[0]);result.classList.add("hidden");empty.classList.toggle("hidden",f.length>0);matches.innerHTML="";if(f.length){f.forEach(m=>{const b=document.createElement("button");b.type="button";b.className="match";b.textContent=m.type==="no-official"?`No oficial · ${m.name}`:`N° ${m.n} · ${m.name}`;b.onclick=()=>show(m);matches.appendChild(b)});matches.classList.remove("hidden")}else matches.classList.add("hidden")}
 document.querySelector("#form").addEventListener("submit",e=>{e.preventDefault();search()});
 q.addEventListener("input",()=>{if(q.value.trim().length>=2)search();else{matches.classList.add("hidden");result.classList.add("hidden");empty.classList.add("hidden")}});
